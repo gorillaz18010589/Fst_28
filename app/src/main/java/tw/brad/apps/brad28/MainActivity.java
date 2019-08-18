@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         //使用電話簿權限
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_CALL_LOG) //READ_CALL_LOG電話簿紀錄
-                != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) { //READ_EXTERNAL_STORAGE相簿權限
 
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_CALL_LOG},//READ_CONTACTS 電話簿權限
@@ -163,10 +163,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void test5(View view){
         // MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         // MediaStore.Images.Media.DATA
+
+        Cursor c = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null,null,null,null);
+
+        while (c.moveToNext()){
+            String filepath = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
+            Log.v("brad", filepath);
+
+        }
+        c.close();
+
+
     }
 
 }
